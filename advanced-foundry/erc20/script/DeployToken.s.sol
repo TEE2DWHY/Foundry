@@ -6,7 +6,7 @@ import {Script} from "../lib/forge-std/src/Script.sol";
 import {GLDToken} from "../src/GLDToken.sol";
 
 contract DeployToken is Script {
-    uint256 INITIAL_SUPPLY = 1000 ether;
+    uint256 INITIAL_SUPPLY = 100000 ether;
 
     function run() external returns (GLDToken) {
         vm.startBroadcast();

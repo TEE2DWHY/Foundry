@@ -7,8 +7,8 @@ import {GLDToken} from "../src/GLDToken.sol";
 
 contract GLDTokenTest is Test {
     GLDToken gldToken;
-    address USER = makeAddr("user");
-    address RECEIVER = makeAddr("receiver");
+    address tade = makeAddr("tade");
+    address eniola = makeAddr("eniola");
     uint256 TRANSFER_AMOUNT = 0.0001 ether;
 
     function setUp() external {
@@ -28,11 +28,11 @@ contract GLDTokenTest is Test {
 
     function testThatAddressIsFunded() external {
         address owner = gldToken.owner();
-        uint256 previousReceiverBalance = gldToken.balanceOf(RECEIVER);
+        uint256 previousReceiverBalance = gldToken.balanceOf(eniola);
         console.log(gldToken.balanceOf(owner));
         vm.prank(owner);
-        gldToken.transfer(RECEIVER, TRANSFER_AMOUNT);
-        uint256 newUserBalance = gldToken.balanceOf(RECEIVER);
+        gldToken.transfer(eniola, TRANSFER_AMOUNT);
+        uint256 newUserBalance = gldToken.balanceOf(eniola);
         assertEq(newUserBalance, previousReceiverBalance + TRANSFER_AMOUNT);
     }
 
@@ -40,12 +40,12 @@ contract GLDTokenTest is Test {
         uint256 AMOUNT_TO_SEND = 100000;
         address owner = gldToken.owner();
         vm.prank(owner);
-        gldToken.mint(USER, TRANSFER_AMOUNT);
-        uint256 prevBalance = gldToken.balanceOf(USER);
-        vm.prank(USER);
-        gldToken.transfer(RECEIVER, AMOUNT_TO_SEND);
-        uint256 newBalance = gldToken.balanceOf(USER);
+        gldToken.mint(tade, TRANSFER_AMOUNT);
+        uint256 prevBalance = gldToken.balanceOf(tade);
+        vm.prank(tade);
+        gldToken.transfer(eniola, AMOUNT_TO_SEND);
+        uint256 newBalance = gldToken.balanceOf(tade);
         assertEq(newBalance, prevBalance - AMOUNT_TO_SEND);
-        console.log(gldToken.balanceOf(RECEIVER));
+        console.log(gldToken.balanceOf(eniola));
     }
 }
