@@ -17,7 +17,7 @@ contract FundMeTest is Test {
     function setUp() external {
         DeployFundMe deployFundMe = new DeployFundMe();
         fundMe = deployFundMe.run();
-        vm.deal(USER, STARTING_BALANCE); // fund ether to the user for testing
+        vm.deal(USER, STARTING_BALANCE);
     }
 
     function testMinimumDollarisFive() public view {
