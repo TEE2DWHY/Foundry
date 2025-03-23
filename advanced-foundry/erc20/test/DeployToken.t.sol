@@ -12,8 +12,8 @@ contract GLDTokenTest is Test {
     uint256 TRANSFER_AMOUNT = 0.0001 ether;
 
     function setUp() external {
-        DeployToken deployToken = new DeployToken();
-        gldToken = deployToken.run();
+        DeployToken deployer = new DeployToken();
+        gldToken = deployer.run();
     }
 
     function testIfContractNameIsCorrect() external view {
@@ -26,7 +26,7 @@ contract GLDTokenTest is Test {
         assertEq(gldToken.symbol(), CONTRACT_SYMBOL);
     }
 
-    function testThatAddressIsFunded() external {
+    function testTransfer() external {
         address owner = gldToken.owner();
         uint256 previousReceiverBalance = gldToken.balanceOf(eniola);
         console.log(gldToken.balanceOf(owner));
@@ -36,7 +36,7 @@ contract GLDTokenTest is Test {
         assertEq(newUserBalance, previousReceiverBalance + TRANSFER_AMOUNT);
     }
 
-    function testThatTransferWorks() external {
+    function testWithdrawal() external {
         uint256 AMOUNT_TO_SEND = 100000;
         address owner = gldToken.owner();
         vm.prank(owner);
@@ -47,5 +47,19 @@ contract GLDTokenTest is Test {
         uint256 newBalance = gldToken.balanceOf(tade);
         assertEq(newBalance, prevBalance - AMOUNT_TO_SEND);
         console.log(gldToken.balanceOf(eniola));
+    }
+
+    function testAllowances() external {
+        address owner = gldToken.owner();
+        vm.prank(owner);
+        gldToken.mint(tade, TRANSFER_AMOUNT);
+        uint256 prevBalance = gldToken.balanceOf(tade);
+        uint256 INITIAL_ALLOWANCE = 1000;
+        vm.prank(tade);
+        gldToken.approve(eniola, INITIAL_ALLOWANCE);
+        vm.prank(eniola);
+        gldToken.transferFrom(tade, eniola, INITIAL_ALLOWANCE);
+        uint256 newBalance = gldToken.balanceOf(tade);
+        assertEq(newBalance, prevBalance - INITIAL_ALLOWANCE);
     }
 }
