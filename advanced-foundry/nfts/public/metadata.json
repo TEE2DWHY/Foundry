@@ -1,0 +1,12 @@
+{
+  "name": "Lina",
+  "description": "My Adorable Cat!",
+  "image": "",
+  "fileName": "https://ipfs.io/ipfs/QmPpgq4Ae2dLLhxcW5DBgSSdAvsAvSzRRkbrGa2Pn8WWHK",
+  "attributes": [
+    {
+      "trait_type": "bold",
+      "value": 100
+    }
+  ]
+}
